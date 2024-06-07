@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Login = (props) => {	
 	return(
 		<Container>
-			<Content>content</Content>
+			<Content><BgImage /></Content>
 		</Container>
 	);
 };
@@ -29,5 +29,22 @@ const Content = styled.div`
 	padding: 80px 40px;
 	height: 100%;
 `;
+
+const BgImage = styled.div`
+	height: 100%;
+	background-position: top;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: -1;
+	background-image: url("images/login-background.jpg");
+`;
+
+const CTA = styled.div``;
+
+const CTALogoOne = styled.img``;
 
 export default Login;
