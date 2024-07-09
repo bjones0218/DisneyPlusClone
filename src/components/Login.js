@@ -59,7 +59,7 @@ const CTA = styled.div`
 	max-width: 650px;
 	display: flex;
 	flex-direction: column;
-	width 100%
+	width: 100%;
 `;
 
 const CTALogoOne = styled.img`
@@ -101,4 +101,5 @@ const CTALogoTwo = styled.img`
 	vertical-align: bottom;
 	width: 100%;
 `;
+
 export default Login;
