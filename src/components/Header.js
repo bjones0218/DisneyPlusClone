@@ -1,6 +1,18 @@
-import styled from 'styled-components'
+import styled from "styled-components";
+import { auth, provider } from "../firebase";
+import {  signInWithPopup } from "firebase/auth";
 
 const Header = (props) => {
+	
+	const handleAuth = () => {
+		console.log("Login click");
+		signInWithPopup(auth, provider).then((result) => {
+			console.log(result)
+		}).catch((error) => {
+			alert(error.message)
+		})
+	};
+
 	return <Nav>
 				<Logo>
 					<img src='/images/logo.svg' alt='Disney+'/>
@@ -44,7 +56,7 @@ const Header = (props) => {
 					</a>
 					
 				</NavMenu>
-				<Login>Login</Login>
+				<Login onClick={handleAuth}>Login</Login>
 			</Nav>;
 };
 
