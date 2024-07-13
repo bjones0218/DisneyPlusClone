@@ -1,62 +1,91 @@
 import styled from "styled-components";
 import { auth, provider } from "../firebase";
 import {  signInWithPopup } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { 
+	selectUserEmail, 
+	selectUserName, 
+	selectUserPhoto, 
+	setUserLoginDetails
+} from "../features/user/userSlice";
 
 const Header = (props) => {
-	
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const userName = useSelector(selectUserName);
+	const userPhoto = useSelector(selectUserPhoto);
+	const userEmail = useSelector(selectUserEmail);
+
 	const handleAuth = () => {
-		console.log("Login click");
 		signInWithPopup(auth, provider).then((result) => {
-			console.log(result)
+			setUser(result.user)
 		}).catch((error) => {
 			alert(error.message)
 		})
+	};
+
+	const setUser = (user) => {
+		dispatch(
+			setUserLoginDetails({
+				name: user.displayName,
+				email: user.email,
+				photo: user.photoURL,
+			})
+		);
 	};
 
 	return <Nav>
 				<Logo>
 					<img src='/images/logo.svg' alt='Disney+'/>
 				</Logo>
-				<NavMenu>
-					<a href='/home'>
-						<img src='/images/home-icon.svg' alt='HOME' />
-						<span>
-							HOME
-						</span>
-					</a>
-					<a href='/search'>
-						<img src='/images/search-icon.svg' alt='SEARCH' />
-						<span>
-							SEARCH
-						</span>
-					</a>
-					<a href='/watchlist'>
-						<img src='/images/watchlist-icon.svg' alt='WATCHLIST' />
-						<span>
-							WATCHLIST
-						</span>
-					</a>
-					<a href='/originals'>
-						<img src='/images/home-icon.svg' alt='ORIGINALS' />
-						<span>
-							ORIGINALS
-						</span>
-					</a>
-					<a href='/movies'>
-						<img src='/images/movie-icon.svg' alt='MOVIES' />
-						<span>
-							MOVIES
-						</span>
-					</a>
-					<a href='/series'>
-						<img src='/images/series-icon.svg' alt='SERIES' />
-						<span>
-							SERIES
-						</span>
-					</a>
-					
-				</NavMenu>
-				<Login onClick={handleAuth}>Login</Login>
+
+				{!userName ? 
+					<Login onClick={handleAuth}>Login</Login>
+				 : 
+				(	<>		
+					<NavMenu>
+						<a href='/home'>
+							<img src='/images/home-icon.svg' alt='HOME' />
+							<span>
+								HOME
+							</span>
+						</a>
+						<a href='/search'>
+							<img src='/images/search-icon.svg' alt='SEARCH' />
+							<span>
+								SEARCH
+							</span>
+						</a>
+						<a href='/watchlist'>
+							<img src='/images/watchlist-icon.svg' alt='WATCHLIST' />
+							<span>
+								WATCHLIST
+							</span>
+						</a>
+						<a href='/originals'>
+							<img src='/images/home-icon.svg' alt='ORIGINALS' />
+							<span>
+								ORIGINALS
+							</span>
+						</a>
+						<a href='/movies'>
+							<img src='/images/movie-icon.svg' alt='MOVIES' />
+							<span>
+								MOVIES
+							</span>
+						</a>
+						<a href='/series'>
+							<img src='/images/series-icon.svg' alt='SERIES' />
+							<span>
+								SERIES
+							</span>
+						</a>
+						
+					</NavMenu>
+					<UserImg src = {userPhoto} alt={userName} />
+					</>
+				)}
 			</Nav>;
 };
 
@@ -167,6 +196,11 @@ const Login = styled.a `
 		color: #000;
 		border-color: transparent;
 	}
+`;
+
+const UserImg = styled.img`
+	height: 80%;
+	border-radius: 50%;
 `;
 
 export default Header
