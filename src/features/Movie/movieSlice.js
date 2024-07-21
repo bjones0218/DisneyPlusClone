@@ -7,7 +7,7 @@ const initialState = {
 	trending: null,
 }
 
-const movieSlice = {
+const movieSlice = createSlice({
 	name: 'movie',
 	initialState,
 	reducers: {
@@ -18,7 +18,7 @@ const movieSlice = {
 			state.trending = action.payload.trending;
 		},
 	},
-};
+});
 
 export const { setMovies } = movieSlice.actions;
 
