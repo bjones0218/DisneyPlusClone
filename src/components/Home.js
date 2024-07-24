@@ -8,7 +8,7 @@ import Trending from './Trending';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import db from '../firebase.js';
-import { doc, onSnapshot, collection, query, where } from "firebase/firestore";
+import { onSnapshot, collection, query } from "firebase/firestore";
 import { setMovies } from '../features/movie/movieSlice';
 import { selectUserName } from '../features/user/userSlice';
 
@@ -42,27 +42,28 @@ const Home = (props) => {
 						break;
 				}
 			});
-		});
 
-		dispatch(
-			setMovies({
-				recommend: recommends,
-				newDisney: newDisney,
-				original: originals,
-				trending: trending,
-			})
-		);
+			dispatch(
+				setMovies({
+					recommend: recommends,
+					newDisney: newDisney,
+					original: originals,
+					trending: trending,
+				})
+			);
+		});
 	}, [userName]);
 
 	return (
-	<Container>
-		<ImgSlider />
-		<Viewers />
-		<Recommends />
-		<NewDisney />
-		<Originals />
-		<Trending />
-	</Container>);
+		<Container>
+			<ImgSlider />
+			<Viewers />
+			<Recommends />
+			<NewDisney />
+			<Originals />
+			<Trending />
+		</Container>
+	);
 };
 
 const Container = styled.main`
